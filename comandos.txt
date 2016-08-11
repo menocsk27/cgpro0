@@ -9,5 +9,30 @@ Dentro de la carpeta de mesa-12.0.0-rc1, ejecutar estos comandos:
 
 export LIBDRM_CFLAGS="-I${LIBDRM_ROOT} -I${LIBDRM_ROOT}/libdrm"
 export LIBDRM_LIBS="-L${LIBDRM_ROOT}/lib -ldrm"
+Para instalar dri3proto
+
+
+wget -c http://www.x.org/releases/individual/proto/dri3proto-1.0.tar.bz2
+tar -xjf dri3proto-1.0.tar.bz2
+cd dri3proto-1.0
+mkdir -p build
+cd build
+../configure --prefix="/usr"
+make install
+
+sudo apt-get install x11proto-present-dev
+sudo apt-get install libudev-dev
+
+sudo apt-get install libexpat1-dev
+
+sudo apt-get install libexpat
+
+configure: error: LLVM is required to build Gallium R300 on x86 and x86_64 ME DIO ESTE ERROR.
+
+Instalan con el comando:
+
+sudo synaptic 
+
+Buscan llvm e instalan la version 3.8
 
 -Además de correr ./configure dentro de la carpeta de mesa-12.0.0-rc1
