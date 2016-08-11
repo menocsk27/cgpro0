@@ -12,21 +12,21 @@
 
 void draw_scene ();
 
-COLOR **buffer; //FrameBuffer
+COLOR **buffer;
 
-int main(int argc, char** argv)
+int main(int argc, char** argv) 
 {
   int i, j;
 
   buffer = (COLOR **)malloc(H_SIZE * sizeof(COLOR*));
-  for (i = 0; i < H_SIZE; i++)
+  for (i = 0; i < H_SIZE; i++) 
       {
        buffer[i] = (COLOR *)malloc(V_SIZE * sizeof(COLOR));
       }
 
-  for (i = 0; i < H_SIZE; i++)
+  for (i = 0; i < H_SIZE; i++) 
       {
-       for (j = 0; j < V_SIZE; j++)
+       for (j = 0; j < V_SIZE; j++) 
            {
             buffer[i][j].r = 0;
             buffer[i][j].g = 0;
@@ -50,9 +50,9 @@ void draw_scene() {
   int i, j;
   COLOR color;
 
-  for (i = 0; i < last_x; i++)
+  for (i = 0; i < last_x; i++) 
       {
-       for (j = 0; j < V_SIZE; j++)
+       for (j = 0; j < V_SIZE; j++) 
            {
             glColor3f (buffer[i][j].r,buffer[i][j].g,buffer[i][j].b);
             glBegin (GL_POINTS);
@@ -61,9 +61,9 @@ void draw_scene() {
            }
       }
 
-  for (i = last_x; i < H_SIZE; i++)
+  for (i = last_x; i < H_SIZE; i++) 
       {
-       for (j = 0; j < V_SIZE; j++)
+       for (j = 0; j < V_SIZE; j++) 
          {
           buffer[i][j].r = (double)(i % (H_SIZE / 10)) / (double)(H_SIZE / 10);
           buffer[i][j].g = (double)(j % (V_SIZE / 10)) / (double)(V_SIZE / 10);
@@ -78,7 +78,6 @@ void draw_scene() {
 
   glFlush();
 }
-
 
 
 

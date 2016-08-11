@@ -1,0 +1,13 @@
+sudo apt-get install freeglut3-dev
+sudo apt-get install libpthread-stubs0-dev
+sudo apt-get install libdrm-dev
+sudo apt-get install x11proto-gl-dev
+
+
+Dentro de la carpeta de mesa-12.0.0-rc1, ejecutar estos comandos:
+
+
+export LIBDRM_CFLAGS="-I${LIBDRM_ROOT} -I${LIBDRM_ROOT}/libdrm"
+export LIBDRM_LIBS="-L${LIBDRM_ROOT}/lib -ldrm"
+
+-Además de correr ./configure dentro de la carpeta de mesa-12.0.0-rc1
