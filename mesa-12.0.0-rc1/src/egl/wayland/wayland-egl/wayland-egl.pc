@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: wayland-egl
+Description: Mesa wayland-egl library
+Version: 12.0.0-rc1
+Requires: wayland-client
+Libs: -L${libdir} -lwayland-egl
+Cflags: -I${includedir}

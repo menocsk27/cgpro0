@@ -197,8 +197,8 @@ am__DIST_COMMON = $(srcdir)/Makefile.in $(top_srcdir)/bin/ar-lib \
 	$(top_srcdir)/src/gbm/main/gbm.pc.in \
 	$(top_srcdir)/src/mapi/es1api/glesv1_cm.pc.in \
 	$(top_srcdir)/src/mapi/es2api/glesv2.pc.in bin/ar-lib \
-	bin/compile bin/config.guess bin/config.sub bin/install-sh \
-	bin/ltmain.sh bin/missing
+	bin/compile bin/config.guess bin/config.sub bin/depcomp \
+	bin/install-sh bin/ltmain.sh bin/missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -524,6 +524,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@

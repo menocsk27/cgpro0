@@ -35,4 +35,15 @@ sudo synaptic
 
 Buscan llvm e instalan la version 3.8
 
--Además de correr ./configure dentro de la carpeta de mesa-12.0.0-rc1
+
+sudo apt-get install automake
+sudo apt-get install bison
+
+
+-Además de correr 
+
+./configure 
+make
+make install
+
+dentro de la carpeta de mesa-12.0.0-rc1
