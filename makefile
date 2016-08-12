@@ -3,10 +3,11 @@ CC=gcc
 OBJECTS=mesa_example.o
 OUTPUT=mesa_example
 
-CFLAGS=-I/usr/local/Mesa-3.4/include
-#LDLIBS=-lX11 -lglut -lMesaGLU -lMesaGL -lm -lXext -lXmu
-LDLIBS=-lX11 -lglut -lGLU -lGL -lm -lXext -lXmu
-LDFLAGS=-L/usr/local/Mesa-3.4/lib -L/usr/X11R6/lib
+CFLAGS=-I/usr/local/Mesa-mesa-12.0.0-rc1.4/include -I/usr/include/GL
+LDLIBS=-lX11 -lglut -lMesaGLU -lMesaGL -lm -lXext -lXmu
+LDLIBS=-lX11 -lglut -lGLU -lGL -lm -lXext  
+#-lXmu
+LDFLAGS=-L/usr/local/mesa-12.0.0-rc1/lib -L/usr/include/X11/Xlib.h -L/usr/include/GL
 
 $(OUTPUT): $(OBJECTS)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) -o $(OUTPUT) $(OBJECTS)

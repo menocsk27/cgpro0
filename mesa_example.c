@@ -9,6 +9,9 @@
 
 #include "mesa_example.h"
 #include "malloc.h"
+#include <gl.h>
+#include <glu.h>
+#include <glut.h>
 
 void draw_scene ();
 
