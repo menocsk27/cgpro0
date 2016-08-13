@@ -7,8 +7,7 @@
  * Archivo:  mesa_example.h
  */
 
-#include <GL/gl.h>
-#include <GL/glu.h>
+
 #include <GL/glut.h>
 
 #define H_SIZE 400

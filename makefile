@@ -1,15 +1,14 @@
 
 CC=gcc
+
+CFLAGS = -I/usr/include
 OBJECTS=mesa_example.o
 OUTPUT=mesa_example
-
-CFLAGS=-I/usr/local/Mesa-3.4/include
-#LDLIBS=-lX11 -lglut -lMesaGLU -lMesaGL -lm -lXext -lXmu
-LDLIBS=-lX11 -lglut -lGLU -lGL -lm -lXext -lXmu
-LDFLAGS=-L/usr/local/Mesa-3.4/lib -L/usr/X11R6/lib
+FLAGS_OPENGL = -lglut -lGL -lGLU 
+LDFLAGS= ${FLAGS_OPENGL} 
 
 $(OUTPUT): $(OBJECTS)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) -o $(OUTPUT) $(OBJECTS)
+	$(CC) $(LDFLAGS) $(CFLAGS) -o $(OUTPUT) $(OBJECTS)
 
 $(OBJECTS): mesa_example.h
 
