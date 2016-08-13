@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <allegro5/allegro.h>
+#include <graphics.h>
 
 #define HSIZE 400
 #define VSIZE 400
 
-static ALLEGRO_DISPLAY *display = NULL;
 
 
 void line1 (int x0, int y0, int x1, int y1){
@@ -173,28 +172,18 @@ void startScreen(){
 
 
 
-   if(!al_init()) {
-      fprintf(stderr, "failed to initialize allegro!\n");
-      return;
-   }
-
-   display = al_create_display(40, 40);
-   if(display==NULL) {
-      fprintf(stderr, "failed to create display!\n");
-      return;
-   }
-
-   al_clear_to_color(al_map_rgb(0,0,0));
-
-   al_flip_display();
-   return 0;
+    int gdriver = DETECT, gmode, errorcode;
+    initgraph(&gdriver, &gmode, "");
+    initwindow (400,400);
+    return 0;
 }
 
 void plot (int x, int y){
-    ALLEGRO_COLOR color_blanco=al_map_rgb(0,0,255);
-    al_draw_pixel(x, VSIZE-y, color_blanco);
+    putpixel(x,getmaxy()-y,4);
 	return 0;
 }
+
+
 int max(int a, int b){
     if (a < b){
         return b;
@@ -220,10 +209,9 @@ int main() {
     int x1 = 100;
     int y1 = 70;
 
-    al_rest(10.0);
 
-    al_destroy_display(display);
     line3(x0,y0,x1,y1);
     //printf("(%i,%i) a (%i,%i)\n", x0,y0,x1,y1);
+    delay(6000);
     return 0;
 }
