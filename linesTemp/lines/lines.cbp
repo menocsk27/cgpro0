@@ -30,7 +30,22 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="`allegro-config --libs`" />
+			<Add directory="/usr/include/allegro5" />
 		</Compiler>
+		<Linker>
+			<Add library="../../../../../usr/lib/liballegro.so" />
+			<Add library="../../../../../usr/lib/liballegro_primitives.so" />
+			<Add library="../../../../../usr/lib/liballegro_image.so" />
+			<Add library="../../../../../usr/lib/liballegro_font.so" />
+			<Add library="../../../../../usr/lib/liballegro_audio.so" />
+			<Add library="../../../../../usr/lib/liballegro_color.so" />
+			<Add library="../../../../../usr/lib/liballegro_ttf.so" />
+			<Add library="../../../../../usr/lib/liballegro_acodec.so" />
+			<Add library="../../../../../usr/lib/liballegro_main.so" />
+			<Add library="../../../../../usr/lib/liballegro_memfile.so" />
+			<Add directory="/usr/lib" />
+		</Linker>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

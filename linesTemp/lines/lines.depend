@@ -4,3 +4,9 @@
 	<stdlib.h>
 	<math.h>
 
+1471073642 source:/home/daniel/cgpro0/linesTemp/lines/main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<allegro5/allegro.h>
+

@@ -1,6 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <allegro5/allegro.h>
+
+#define HSIZE 400
+#define VSIZE 400
+
+static ALLEGRO_DISPLAY *display = NULL;
+
 
 void line1 (int x0, int y0, int x1, int y1){
     int i, temp;
@@ -143,13 +150,16 @@ void line3 (int x0, int y0, int x1, int y1){
         x = x0;
         y = y0;
 
+        int cordX;
+        int cordY;
         for (i = 0; i <= ancho; i++){
-            printf("Xf: %Lf ", x);
-            printf("X: %f ",round(x));
-            printf("Yf: %Lf ", y);
-            printf("Y: %f\n", round(y));
-
-            plot(round(x), round(y));
+            //printf("Xf: %Lf ", x);
+            //printf("X: %f ",round(x));
+            //printf("Yf: %Lf ", y);
+            //printf("Y: %f\n", round(y));
+            cordX=round(x);
+            cordY=round(y);
+            plot(cordX, cordY);
             x += paso_x;
             y += paso_y;
         }
@@ -159,9 +169,31 @@ void line4 (int x0, int y0, int x1, int y1){
 
 }
 
+void startScreen(){
+
+
+
+   if(!al_init()) {
+      fprintf(stderr, "failed to initialize allegro!\n");
+      return;
+   }
+
+   display = al_create_display(40, 40);
+   if(display==NULL) {
+      fprintf(stderr, "failed to create display!\n");
+      return;
+   }
+
+   al_clear_to_color(al_map_rgb(0,0,0));
+
+   al_flip_display();
+   return 0;
+}
 
 void plot (int x, int y){
-
+    ALLEGRO_COLOR color_blanco=al_map_rgb(0,0,255);
+    al_draw_pixel(x, VSIZE-y, color_blanco);
+	return 0;
 }
 int max(int a, int b){
     if (a < b){
@@ -172,6 +204,7 @@ int max(int a, int b){
 }
 
 
+
 int main() {
     //El main debe asegurarse que
     //      max(x0,x1) < Xres
@@ -179,13 +212,18 @@ int main() {
     //      max(y0,y1) < Yres
     //      min(y0,y1) > 0
 
+    startScreen();
+
     int x0 = 3;
     int y0 = 4;
 
-    int x1 = 10;
-    int y1 = 7;
+    int x1 = 100;
+    int y1 = 70;
 
+    al_rest(10.0);
+
+    al_destroy_display(display);
     line3(x0,y0,x1,y1);
-    printf("(%i,%i) a (%i,%i)\n", x0,y0,x1,y1);
+    //printf("(%i,%i) a (%i,%i)\n", x0,y0,x1,y1);
     return 0;
 }
