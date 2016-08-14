@@ -692,9 +692,11 @@ int max(int a, int b){
 }
 
 int genRandLimNumber(int lim){
-    srand(time(NULL));
-    int r = rand() % lim;
-    return r;
+    static double tiempo;
+    tiempo+=time(NULL);
+    delay(100);
+    srand(tiempo);
+    return (rand() % lim);
 }
 
 int runPlotlessAlgorithms(int numCor, int numVeces){
@@ -711,6 +713,8 @@ int runPlotlessAlgorithms(int numCor, int numVeces){
         arregloCorY0[i] = genRandLimNumber(VSIZE);
         arregloCorX1[i] = genRandLimNumber(HSIZE);
         arregloCorY1[i] = genRandLimNumber(VSIZE);
+
+        printf("Linea de (%d ,%d) a (%d, %d) \n",arregloCorX0[i], arregloCorY0[i], arregloCorX1[i],arregloCorY1[i] );
     }
 
     printf("Ejecucion algoritmo 1 sin plot con %d lineas: \n", numCor);
@@ -785,6 +789,8 @@ int runPlotAlgorithms(int numCor, int numVeces){
         arregloCorY0[i] = genRandLimNumber(VSIZE);
         arregloCorX1[i] = genRandLimNumber(HSIZE);
         arregloCorY1[i] = genRandLimNumber(VSIZE);
+
+
     }
 
     printf("Ejecucion algoritmo 1 con plot con %d lineas dibujadas %d veces: \n \n", numCor, numVeces);
@@ -844,7 +850,7 @@ int main() {
     //      max(y0,y1) < Yres
     //      min(y0,y1) > 0
 
-    runPlotlessAlgorithms(10000, 3000);
+    runPlotlessAlgorithms(100, 10);
 
     //runPlotAlgorithms(1000);
     /*
