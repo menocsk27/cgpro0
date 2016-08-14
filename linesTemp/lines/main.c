@@ -7,6 +7,8 @@
 #define HSIZE 400
 #define VSIZE 400
 
+static int color = 2;
+//Algoritmos normales
 void line1 (int x0, int y0, int x1, int y1){
     int i, temp;
     long double m,b,x,y;
@@ -336,10 +338,7 @@ void line4 (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
     }
 }
 
-
-
 //Algoritmos sin plot
-
 void line1noPlot (int x0, int y0, int x1, int y1){
     int i, temp;
     long double m,b,x,y;
@@ -669,8 +668,6 @@ void line4noPlot (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
     }
 }
 
-
-
 void startScreen(){
     int gdriver = DETECT, gmode;
     initgraph(&gdriver, &gmode, NULL);
@@ -679,18 +676,15 @@ void startScreen(){
     initwindow (HSIZE,VSIZE);
 }
 
-
 void plot0(){}
-
 void plot (int x, int y){
-    putpixel(x,getmaxy()-y,4);
+    putpixel(x,getmaxy()-y,color);
 }
 
 int max(int a, int b){
     if (a < b) { return b; }
     else { return a; }
 }
-
 int genRandLimNumber(int lim){
     static double tiempo;
     tiempo+=time(NULL);
@@ -700,180 +694,118 @@ int genRandLimNumber(int lim){
 }
 
 int runPlotlessAlgorithms(int numCor, int numVeces){
-    clock_t start_a1, start_a2, start_a3, start_a4, end_a1, end_a2, end_a3, end_a4;
-    int arregloCorX0[numCor];
-    int arregloCorY0[numCor];
-    int arregloCorX1[numCor];
-    int arregloCorY1[numCor];
+    clock_t start[4], end[4];
+    int arregloCorX0[numCor], arregloCorY0[numCor], arregloCorX1[numCor], arregloCorY1[numCor];
     int i,veces;
 
     for (i=0; i<numCor; i++){
-
         arregloCorX0[i] = genRandLimNumber(HSIZE);
         arregloCorY0[i] = genRandLimNumber(VSIZE);
         arregloCorX1[i] = genRandLimNumber(HSIZE);
         arregloCorY1[i] = genRandLimNumber(VSIZE);
-
-        printf("Linea de (%d ,%d) a (%d, %d) \n",arregloCorX0[i], arregloCorY0[i], arregloCorX1[i],arregloCorY1[i] );
     }
 
-    printf("Ejecucion algoritmo 1 sin plot con %d lineas: \n", numCor);
-
-    start_a1=clock();
+    //Algoritmo 1
+    start[0]=clock();
     for (i=0; i<numCor; i++){
         for (veces=0; veces<numVeces; veces++){
             line1noPlot(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
         }
-
-
     }
-    end_a1=clock();
-    printf("Fin del algoritmo 1. Duracion: %lf segundos \n\n",((double) end_a1-start_a1)/CLOCKS_PER_SEC);
+    end[0]=clock();
 
-    printf("Ejecucion algoritmo 2 sin plot con %d lineas dibujadas %d veces: \n \n", numCor, numVeces);
-
-    start_a2=clock();
+    //Algoritmo 2
+    start[1]=clock();
     for (i=0; i<numCor; i++){
-
         for (veces=0; veces<numVeces; veces++){
             line2noPlot(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
         }
     }
-    end_a2=clock();
-    printf("Fin del algoritmo 2. Duracion: %lf segundos \n\n ",((double) end_a2-start_a2)/CLOCKS_PER_SEC);
+    end[1]=clock();
 
-    printf("Ejecucion algoritmo 3 sin plot con %d lineas dibujadas %d veces: \n \n", numCor, numVeces);
-
-    start_a3=clock();
+    //Algoritmo 3
+    start[2]=clock();
     for (i=0; i<numCor; i++){
-
         for (veces=0; veces<numVeces; veces++){
             line3noPlot(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
         }
-
     }
-    end_a3=clock();
-    printf("Fin del algoritmo 3. Duracion: %lf segundos \n \n",((double) end_a3-start_a3)/CLOCKS_PER_SEC);
+    end[2]=clock();
 
-    printf("Ejecucion algoritmo de Bressenhan sin plot con %d lineas dibujadas %d veces: \n \n", numCor, numVeces);
-
-    start_a4=clock();
+    //Algoritmo 4
+    start[3]=clock();
     for (i=0; i<numCor; i++){
-
         for (veces=0; veces<numVeces; veces++){
             line4noPlot(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
         }
-
-
     }
-    end_a4=clock();
-    printf("Fin del algoritmo de Bressenhan. Duracion: %lf segundos \n \n",((double) end_a4-start_a4)/CLOCKS_PER_SEC);
+    end[3]=clock();
 
-
+    printf("Duraciones sin plot.\n \t\tAlgoritmo \tDuración\n");
+    for (i=0;i<=3;i++){
+        printf("\t\t %i. \t\t %lf segundos \n",(i+1),((double) end[i]-start[i])/CLOCKS_PER_SEC);
+    }
 }
-
-
 int runPlotAlgorithms(int numCor, int numVeces){
-    clock_t start_a1, start_a2, start_a3, start_a4,end_a1, end_a2, end_a3, end_a4;
-    int arregloCorX0[numCor];
-    int arregloCorY0[numCor];
-    int arregloCorX1[numCor];
-    int arregloCorY1[numCor];
-    int i, veces;
+    clock_t start[4], end[4];
+    int arregloCorX0[numCor], arregloCorY0[numCor], arregloCorX1[numCor], arregloCorY1[numCor];
+    int i,veces;
 
     startScreen();
 
+    //Algoritmo 1
+    start[0]=clock();
     for (i=0; i<numCor; i++){
-
-        arregloCorX0[i] = genRandLimNumber(HSIZE);
-        arregloCorY0[i] = genRandLimNumber(VSIZE);
-        arregloCorX1[i] = genRandLimNumber(HSIZE);
-        arregloCorY1[i] = genRandLimNumber(VSIZE);
-
-
-    }
-
-    printf("Ejecucion algoritmo 1 con plot con %d lineas dibujadas %d veces: \n \n", numCor, numVeces);
-
-    start_a1=clock();
-    for (i=0; i<numCor; i++){
-
         for (veces=0; veces<numVeces; veces++){
             line1(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
         }
     }
-    end_a1=clock();
-    printf("Fin del algoritmo 1. Duracion: %lf segundos \n\n",((double) end_a1-start_a1)/CLOCKS_PER_SEC);
-    delay(2000);
-    printf("Ejecucion algoritmo 2 con plot con %d lineas dibujadas %d veces: \n \n", numCor, numVeces);
+    end[0]=clock(); color++;
 
-    start_a2=clock();
+    //Algoritmo 2
+    start[1]=clock();
     for (i=0; i<numCor; i++){
-
         for (veces=0; veces<numVeces; veces++){
             line2(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
         }
     }
-    end_a2=clock();
-    printf("Fin del algoritmo 2. Duracion: %lf segundos \n\n ",((double) end_a2-start_a2)/CLOCKS_PER_SEC);
-    delay(2000);
-    printf("Ejecucion algoritmo 3 con plot con %d lineas dibujadas %d veces: \n \n", numCor, numVeces);
+    end[1]=clock(); color++;
 
-    start_a3=clock();
+    //Algoritmo 3
+    start[2]=clock();
     for (i=0; i<numCor; i++){
-
         for (veces=0; veces<numVeces; veces++){
             line3(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
         }
     }
-    end_a3=clock();
-    printf("Fin del algoritmo 3. Duracion: %lf segundos \n \n",((double) end_a3-start_a3)/CLOCKS_PER_SEC);
-    delay(2000);
-    printf("Ejecucion algoritmo de Bressenhan con plot con %d lineas dibujadas %d veces: \n \n", numCor, numVeces);
+    end[2]=clock(); color++;
 
-    start_a4=clock();
+    //Algoritmo 4
+    start[3]=clock();
     for (i=0; i<numCor; i++){
-
         for (veces=0; veces<numVeces; veces++){
             line4(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
         }
     }
-    end_a4=clock();
-    printf("Fin del algoritmo de Bressenhan. Duracion: %lf segundos \n \n",((double) end_a4-start_a4)/CLOCKS_PER_SEC);
+    end[3]=clock(); color++;
 
+    printf("Duraciones con plot.\n \t\tAlgoritmo \tDuración\n");
+    for (i=0;i<=3;i++){
+        printf("\t\t %i. \t\t %lf segundos \n",(i+1),((double) end[i]-start[i])/CLOCKS_PER_SEC);
+    }
 }
 
 int main() {
-    //El main debe asegurarse que
-    //      max(x0,x1) < Xres
-    //      min(x0,x0) > 0
-    //      max(y0,y1) < Yres
-    //      min(y0,y1) > 0
 
-    runPlotlessAlgorithms(100, 10);
+    printf("Tecnológico de Costa Rica\n IC8019 - Gráficos Por Computadora, PROYECTO 0: Algoritmos de líneas\n");
+    printf("\n\n Profesor: Dr. Francisco Torres Rojas\n");
+    printf(" Estudiantes:\n\tCarlos Girón Alas\n\tJulián J. Méndez Oconitrillo\n\tDaniel Troyo Garro\n");
+    printf("17 agosto 2016\n\n");
 
-    //runPlotAlgorithms(1000);
-    /*
+    int lineas = 3;
+    int veces = 3;
+    runPlotlessAlgorithms(lineas, veces);
+    runPlotAlgorithms(lineas, veces);
 
-    startScreen();
-
-    int x0 = 150;
-    int y0 = 150;
-
-    int x1 = 190;
-    int y1 = 190;
-
-    int x1s[8] = {150, 110, 110, 110, 150, 190, 190, 190};
-    int y1s[8] = {190, 190, 150, 110, 110, 110, 150, 190};
-
-    for (int i = 0; i<8; i++){
-        line1(x0     ,y0     ,x1s[i]     ,y1s[i]);
-        line2(x0     ,y0+100 ,x1s[i]     ,y1s[i]+100);
-        line3(x0+100 ,y0+100 ,x1s[i]+100 ,y1s[i]+100);
-        line4(x0+100 ,y0     ,x1s[i]+100 ,y1s[i]);
-    }
-    */
-
-    //delay(6000);
     return 0;
 }
