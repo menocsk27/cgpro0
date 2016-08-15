@@ -183,15 +183,15 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
 
     if (y1 > y0) { //1,2,3 o 4
         if (x1 > x0) { //1 o 2
-            Delta_NE =  dy-dx;
+            Delta_NE =  d2y-d2x;
             if ( dy <= dx ){ //Octante 1
 
-                Delta_E  =  dy;
-                d = d2y-dy;
+                Delta_E  =  d2y;
+                d = d2y-dx;
 
-                while (xp <= x1){ //Avanza en x
+                while (xp < x1){ //Avanza en x
                     xp++;
-                    if (d<=0) {
+                    if (d<0) {
                         d += Delta_E;
                     }
                     else {
@@ -203,12 +203,12 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
             }
             else{ //Octante 2
 
-                Delta_N  = -dx;
+                Delta_N  = -d2x;
                 d = dy -d2x;
 
-                while (yp <= y1){ //Avanza en y
+                while (yp < y1){ //Avanza en y
                     yp++;
-                    if (d<=0) {
+                    if (d<0) {
                         xp++;
                         d += Delta_NE;
                     }
@@ -220,15 +220,15 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
             }
         }
         else { //3 u 4
-            Delta_NW = -dy-dx;
+            Delta_NW = -d2y-d2x;
             if (dx >= -dy){ //Octante 3
 
-                Delta_N  = -dx;
+                Delta_N  = -d2x;
                 d = -dy -d2x;
 
-                while (yp <= y1){ //Avanza en y
+                while (yp < y1){ //Avanza en y
                     yp++;
-                    if (d<=0) {
+                    if (d<0) {
                         d += Delta_N;
                     }
                     else {
@@ -239,12 +239,12 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
                 }
             }
             else{ //Octante 4
-                Delta_W  = -dy;
+                Delta_W  = -d2y;
                 d = -d2y-dx ;
 
-                while (xp >= x1){ //Retrocede en x
+                while (xp > x1){ //Retrocede en x
                     xp--;
-                    if (d<=0) {
+                    if (d<0) {
                         yp++;
                         d += Delta_NW;
                     }
@@ -258,15 +258,15 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
     }
     else { //5,6,7 u 8
         if (x1 < x0) { //5 o 6
-            Delta_SW = -dy+dx;
+            Delta_SW = -d2y+d2x;
             if (dx <= dy){ //Octante 5
 
-                Delta_W  = -dy   ;
+                Delta_W  = -d2y   ;
                 d = -d2y+dx ;
 
-                while (xp >= x1){ //Retrocede en x
+                while (xp > x1){ //Retrocede en x
                     xp--;
-                    if (d<=0) {
+                    if (d<0) {
                         d += Delta_W;
                     }
                     else {
@@ -279,12 +279,12 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
             }
             else{ //Octante 6
 
-                Delta_S  =  dx;
+                Delta_S  =  d2x;
                 d = -dy +d2x;
 
-                while (yp >= y1){ //Retrocede en y
+                while (yp > y1){ //Retrocede en y
                     yp--;
-                    if (d<=0) {
+                    if (d<0) {
                         xp--;
                         d += Delta_SW;
                     }
@@ -297,15 +297,15 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
             }
         }
         else { //7 u 8
-            Delta_SE =  dy+dx;
+            Delta_SE =  d2y+d2x;
             if (dx <= -dy){ //Octante 7
 
-                Delta_S  =  dx   ;
+                Delta_S  =  d2x   ;
                 d =  dy +d2x;
 
-                while (yp >= y1){ //Retrocede en y
+                while (yp > y1){ //Retrocede en y
                     yp--;
-                    if (d<=0) {
+                    if (d<0) {
                         d += Delta_S;
                     }
                     else {
@@ -318,12 +318,12 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
             }
             else{ //Octante 8
 
-                Delta_E  =  dy;
+                Delta_E  =  d2y;
                 d =  d2y+dx;
 
-                while (xp <= x1){ //Avanza en x
+                while (xp < x1){ //Avanza en x
                     xp++;
-                    if (d<=0) {
+                    if (d<0) {
                         yp--;
                         d += Delta_SE;
                     }
