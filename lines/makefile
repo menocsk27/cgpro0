@@ -11,7 +11,7 @@ $(OUTPUT): $(OBJECT)
 	$(CC) $(OBJECT) -o $(OUTPUT) $(LDFLAGS) $(CFLAGS) 
 
 $(OBJECT): $(SOURCE)
-	$(CC) -c $(SOURCE) -O pro.o $(LDFLAGS)
+	$(CC) -c $(SOURCE) -o pro0.o $(LDFLAGS)
 
 clean:
 	rm -f *.o

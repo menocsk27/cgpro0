@@ -10,7 +10,6 @@
 #include <GL/glut.h>
 
 static int res;
-static int xCor, yCor, lineasGl, vecesGl;
 COLOR **buffer;
 
 void plot0( int x, int y){   
@@ -372,12 +371,12 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
     }
 }
 
-int timeAlgorithms( void (*f)(int,int) , char wplot[] ){
+int timeAlgorithms(int numLineas, int numVeces, void (*f)(int,int) , char wplot[] ){
     clock_t start[4], end[4];
-    int arregloCorX0[lineasGl], arregloCorY0[lineasGl], arregloCorX1[lineasGl], arregloCorY1[lineasGl];
+    int arregloCorX0[numLineas], arregloCorY0[numLineas], arregloCorX1[numLineas], arregloCorY1[numLineas];
     int i,veces;
 
-    for (i=0; i<lineasGl; i++){
+    for (i=0; i<numLineas; i++){
         arregloCorX0[i] = genRandLimNumber(res);
         arregloCorY0[i] = genRandLimNumber(res);
         arregloCorX1[i] = genRandLimNumber(res);
@@ -387,8 +386,8 @@ int timeAlgorithms( void (*f)(int,int) , char wplot[] ){
     glColor3f (0,1,0);
     //Algoritmo 1
     start[0]=clock();
-    for (i=0; i<lineasGl; i++){
-        for (veces=0; veces<vecesGl; veces++){
+    for (i=0; i<numLineas; i++){
+        for (veces=0; veces<numVeces; veces++){
             line1(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i],(*f));
         }
     }
@@ -397,8 +396,8 @@ int timeAlgorithms( void (*f)(int,int) , char wplot[] ){
     glColor3f (0,1,1);
     //Algoritmo 2
     start[1]=clock();
-    for (i=0; i<lineasGl; i++){
-        for (veces=0; veces<vecesGl; veces++){
+    for (i=0; i<numLineas; i++){
+        for (veces=0; veces<numVeces; veces++){
             line2(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i], (*f));
         }
     }
@@ -407,8 +406,8 @@ int timeAlgorithms( void (*f)(int,int) , char wplot[] ){
     glColor3f (1,0,1);
     //Algoritmo 3
     start[2]=clock();
-    for (i=0; i<lineasGl; i++){
-        for (veces=0; veces<vecesGl; veces++){
+    for (i=0; i<numLineas; i++){
+        for (veces=0; veces<numVeces; veces++){
             line3(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i], (*f));
         }
     }
@@ -417,8 +416,8 @@ int timeAlgorithms( void (*f)(int,int) , char wplot[] ){
     glColor3f (1,0,0);
     //Algoritmo 4
     start[3]=clock();
-    for (i=0; i<lineasGl; i++){
-        for (veces=0; veces<vecesGl; veces++){
+    for (i=0; i<numLineas; i++){
+        for (veces=0; veces<numVeces; veces++){
             line4(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i], (*f));
         }
     }
@@ -432,6 +431,7 @@ int timeAlgorithms( void (*f)(int,int) , char wplot[] ){
 
 int main(int argc, char *argv[]) {
 
+    int lineas, veces; 
     if( argc != 4 ) {
       printf("Se espera 3 parametros. \n Introduzca los parametros de forma <programa> <resolucion> <# lineas> <# veces>");
       return 0;
@@ -441,16 +441,16 @@ int main(int argc, char *argv[]) {
         printf ("error - <resolucion> no es un entero");
         return 0;
     }
-    if (sscanf (argv[2], "%i", &lineasGl)!=1) { 
+    if (sscanf (argv[2], "%i", &lineas)!=1) { 
         printf ("error - <# lineas> no es un entero");
         return 0;
     }
-    if (sscanf (argv[3], "%i", &vecesGl)!=1) {
+    if (sscanf (argv[3], "%i", &veces)!=1) {
         printf ("error - <# veces> no es un enteror");
         return 0;
     }
 
-    buffer = (COLOR **)malloc(H_SIZE * sizeof(COLOR*));
+    buffer = (COLOR **)malloc(res * sizeof(COLOR*));
     
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
@@ -465,8 +465,8 @@ int main(int argc, char *argv[]) {
     printf(" Estudiantes:\n\tCarlos Girón Alas\n\tJulián J. Méndez Oconitrillo\n\tDaniel Troyo Garro\n");
     printf("17 agosto 2016\n\n");
 
-    timeAlgorithms(plot0, "sin");
-    timeAlgorithms(plot, "con");
+    timeAlgorithms(lineas, veces, plot0, "sin");
+    timeAlgorithms(lineas, veces, plot, "con");
     glutMainLoop();
 
     return 0;
