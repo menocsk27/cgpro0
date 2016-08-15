@@ -1,13 +1,3 @@
-/*
- * Instituto Tecnologico de Costa Rica
- * Escuela de Ingenieria en Computacion
- * Computer Graphics
- *
- * Programa: Mesa Example
- * Archivo:  mesa_example.h
- */
-
-
 #include <GL/glut.h>
 
 #define H_SIZE 400
