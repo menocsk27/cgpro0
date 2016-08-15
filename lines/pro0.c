@@ -13,7 +13,7 @@ static int res;
 static int xCor, yCor, lineasGl, vecesGl;
 COLOR **buffer;
 
-void plot0(){
+void plot0( int x, int y){   
 }
 
 void plot (int x, int y){
@@ -42,8 +42,8 @@ int genRandLimNumber(int lim){
     return (rand() % lim);
 }
 
-//Algoritmos normales
-void line1 (int x0, int y0, int x1, int y1){
+//Algoritmos
+void line1 (int x0, int y0, int x1, int y1, void (*plot)(int,int) ){
     int i, temp;
     long double m,b,x,y;
     int vertical = 0;
@@ -79,7 +79,7 @@ void line1 (int x0, int y0, int x1, int y1){
             //printf("X: %Lf ", x);
             //printf("X: %f",round(x));
             //printf("Y: %i\n",i);
-            plot(((int)round(x)),i);
+            (*plot)(((int)round(x)),i);
         }
     }
 
@@ -91,7 +91,7 @@ void line1 (int x0, int y0, int x1, int y1){
         //Ejecución de la ecuación normal de la recta y = mx + b
         for (i = x0; i<=x1; i++){ //Avanza normalmente sobre las x porque hay más densidad de Xs que Ys.
             if ((vertical==1)&&(y0==y1)){
-                plot(x0,y0);
+                (*plot)(x0,y0);
             }
             else {
                 y = ((long double)(m * i + b));
@@ -100,12 +100,12 @@ void line1 (int x0, int y0, int x1, int y1){
                 //printf("Y: %f ", round(y));
                 //printf("X: %i \n", i);
 
-                plot(i,((int)round(y)));
+                (*plot)(i,((int)round(y)));
             }
         }
     }
 }
-void line2 (int x0, int y0, int x1, int y1){
+void line2 (int x0, int y0, int x1, int y1, void (*plot)(int,int) ){
     int i, temp;
     long double m,x,y;
     int vertical = 0;
@@ -132,7 +132,7 @@ void line2 (int x0, int y0, int x1, int y1){
             //printf("X: %f",round(x));
             //printf("Y: %i\n",i);
 
-            plot(((int)round(x)),i);
+            (*plot)(((int)round(x)),i);
 
             if (vertical!=1) {
                 if (m != 0){
@@ -155,28 +155,28 @@ void line2 (int x0, int y0, int x1, int y1){
 
         for (i = x0; i<=x1; i++){
             if ((vertical==1)&&(y0==y1)){
-                plot(x0,y0);
+                (*plot)(x0,y0);
             }
             else {
                 //printf("Y: %Lf ", y);
                 //printf("Y: %f ", round(y));
                 //printf("X: %i \n", i);
 
-                plot(i,((int)round(y)));
+                (*plot)(i,((int)round(y)));
 
                 y += m;
             }
         }
     }
 }
-void line3 (int x0, int y0, int x1, int y1){
+void line3 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){
     long double x, y;
     double paso_x, paso_y;
     int i, ancho;
 
     ancho = max(abs(x1 - x0), abs(y1 - y0));
     if (ancho == 0) {
-        plot(x0, y0);
+        (*plot)(x0, y0);
     }
     else {
         paso_x = ((long double)(x1-x0))/ancho;
@@ -194,13 +194,13 @@ void line3 (int x0, int y0, int x1, int y1){
             //printf("Y: %f\n", round(y));
             cordX=round(x);
             cordY=round(y);
-            plot(cordX, cordY);
+            (*plot)(cordX, cordY);
             x += paso_x;
             y += paso_y;
         }
     }
 }
-void line4 (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
+void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham (punto medio)
 
     int d2x,d2y,dx,dy,d,
         Delta_N,Delta_NE,Delta_E,Delta_SE,
@@ -208,7 +208,7 @@ void line4 (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
         xp,yp;
 
     xp = x0; yp = y0;
-    plot(xp,yp);
+    (*plot)(xp,yp);
 
     d2y = 2*(y1-y0);
     d2x = 2*(x1-x0);
@@ -232,7 +232,7 @@ void line4 (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
                         yp++;
                         d += Delta_NE;
                     }
-                    plot(xp,yp);
+                    (*plot)(xp,yp);
                 }
             }
             else{ //Octante 2
@@ -249,7 +249,7 @@ void line4 (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
                     else {
                         d += Delta_N;
                     }
-                    plot(xp,yp);
+                    (*plot)(xp,yp);
                 }
             }
         }
@@ -269,7 +269,7 @@ void line4 (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
                         xp--;
                         d += Delta_NW;
                     }
-                    plot(xp,yp);
+                    (*plot)(xp,yp);
                 }
             }
             else{ //Octante 4
@@ -285,7 +285,7 @@ void line4 (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
                     else {
                         d += Delta_W;
                     }
-                    plot(xp,yp);
+                    (*plot)(xp,yp);
                 }
             }
         }
@@ -307,7 +307,7 @@ void line4 (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
                         yp--;
                         d += Delta_SW;
                     }
-                    plot(xp,yp);
+                    (*plot)(xp,yp);
 
                 }
             }
@@ -325,7 +325,7 @@ void line4 (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
                     else {
                         d += Delta_S;
                     }
-                    plot(xp,yp);
+                    (*plot)(xp,yp);
 
                 }
             }
@@ -346,7 +346,7 @@ void line4 (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
                         xp++;
                         d += Delta_SE;
                     }
-                    plot(xp,yp);
+                    (*plot)(xp,yp);
 
                 }
             }
@@ -364,7 +364,7 @@ void line4 (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
                     else {
                         d += Delta_E;
                     }
-                    plot(xp,yp);
+                    (*plot)(xp,yp);
 
                 }
             }
@@ -372,337 +372,7 @@ void line4 (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
     }
 }
 
-//Algoritmos sin plot
-void line1noPlot (int x0, int y0, int x1, int y1){
-    int i, temp;
-    long double m,b,x,y;
-    int vertical = 0;
-
-    if ((x1 != x0)) {
-        m = ((long double)(y1 - y0)) / (x1 - x0);
-        b = (long double)(y0 - (m * x0));
-
-        //printf("m: %Lf ", m);
-        //printf("b: %Lf \n", b);
-    }
-    else {
-        vertical = 1;
-    }
-
-    //Revisar densidad de x > densidad de y, si no cambiar variable independiente (debe hacerse después del paso anterior)
-    if (abs(x1-x0)<abs(y1-y0)){
-        if (y0>y1) { //Swapeo los puntos para que dibuje de abajo hacia arriba siempre
-            temp = x0; x0 = x1; x1 = temp;
-            temp = y0; y0 = y1; y1 = temp;
-        }
-        //Cambiar variable independiente. x = (b+y)/m
-        for (i = y0; i<=y1; i++){ //Como hay más densidad de Ys que X, mi variable independiente es la y.
-            if (vertical!=1) {
-                if (m != 0){
-                    x = ((long double)((i-b)/m));
-                }
-            }
-            else {
-                x = x0;
-            }
-
-            //printf("X: %Lf ", x);
-            //printf("X: %f",round(x));
-            //printf("Y: %i\n",i);
-            plot0();
-        }
-    }
-
-    else { //Más Xs que Ys
-        if (x0>x1) { //Para que siempre dibuje de izquierda a derecha
-            temp = x0; x0 = x1; x1 = temp;
-            temp = y0; y0 = y1; y1 = temp;
-        }
-        //Ejecución de la ecuación normal de la recta y = mx + b
-        for (i = x0; i<=x1; i++){ //Avanza normalmente sobre las x porque hay más densidad de Xs que Ys.
-            if ((vertical==1)&&(y0==y1)){
-                plot0();
-            }
-            else {
-                y = ((long double)(m * i + b));
-
-                //printf("Y: %Lf ", y);
-                //printf("Y: %f ", round(y));
-                //printf("X: %i \n", i);
-
-                plot0();
-            }
-        }
-    }
-}
-void line2noPlot (int x0, int y0, int x1, int y1){
-    int i, temp;
-    long double m,x,y;
-    int vertical = 0;
-
-    if ((x1 != x0)) {
-        m = ((long double)(y1 - y0)) / (x1 - x0);
-        //printf("m: %Lf \n", m);
-    }
-    else {
-        vertical = 1;
-    }
-
-    //Revisar densidad de x > y
-    if (abs(x1-x0)<abs(y1-y0)){
-        if (y0>y1) { //Swapeo
-            temp = x0; x0 = x1; x1 = temp;
-            temp = y0; y0 = y1; y1 = temp;
-        }
-
-        x = x0;
-        //Cambiar variable independiente. x = (b+y)/m, delta = 1/m
-        for (i = y0; i<=y1; i++){
-            //printf("X: %Lf ", x);
-            //printf("X: %f",round(x));
-            //printf("Y: %i\n",i);
-
-            plot0();
-
-            if (vertical!=1) {
-                if (m != 0){
-                    x += 1/m;
-                }
-            }
-            else {
-                x = x0;
-            }
-        }
-    }
-
-    else { //Más Xs que Ys
-        if (x0>x1) { //Para que siempre dibuje de izquierda a derecha
-            temp = x0; x0 = x1; x1 = temp;
-            temp = y0; y0 = y1; y1 = temp;
-        }
-
-        y = y0; //Valor inicial.
-
-        for (i = x0; i<=x1; i++){
-            if ((vertical==1)&&(y0==y1)){
-                plot(x0,y0);
-            }
-            else {
-                //printf("Y: %Lf ", y);
-                //printf("Y: %f ", round(y));
-                //printf("X: %i \n", i);
-
-                plot0();
-
-                y += m;
-            }
-        }
-    }
-}
-void line3noPlot (int x0, int y0, int x1, int y1){
-    long double x, y;
-    double paso_x, paso_y;
-    int i, ancho;
-
-    ancho = max(abs(x1 - x0), abs(y1 - y0));
-    if (ancho == 0) {
-        plot0();
-    }
-    else {
-        paso_x = ((long double)(x1-x0))/ancho;
-        paso_y = ((long double)(y1-y0))/ancho;
-
-        x = x0;
-        y = y0;
-
-        int cordX;
-        int cordY;
-        for (i = 0; i <= ancho; i++){
-            //printf("Xf: %Lf ", x);
-            //printf("X: %f ",round(x));
-            //printf("Yf: %Lf ", y);
-            //printf("Y: %f\n", round(y));
-            cordX=round(x);
-            cordY=round(y);
-            plot0();
-            x += paso_x;
-            y += paso_y;
-        }
-    }
-}
-void line4noPlot (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
-
-    int d2x,d2y,dx,dy,d,
-        Delta_N,Delta_NE,Delta_E,Delta_SE,
-        Delta_S,Delta_SW,Delta_W,Delta_NW,
-        xp,yp;
-
-    xp = x0; yp = y0;
-    plot0();
-
-    d2y = 2*(y1-y0);
-    d2x = 2*(x1-x0);
-    dy  = (y1-y0);
-    dx  = (x1-x0);
-
-    if (y1 > y0) { //1,2,3 o 4
-        if (x1 > x0) { //1 o 2
-            Delta_NE =  dy-dx;
-            if ( dy <= dx ){ //Octante 1
-
-                Delta_E  =  dy;
-                d = d2y-dy;
-
-                while (xp <= x1){ //Avanza en x
-                    xp++;
-                    if (d<=0) {
-                        d += Delta_E;
-                    }
-                    else {
-                        yp++;
-                        d += Delta_NE;
-                    }
-                    plot0();
-                }
-            }
-            else{ //Octante 2
-
-                Delta_N  = -dx;
-                d = dy -d2x;
-
-                while (yp <= y1){ //Avanza en y
-                    yp++;
-                    if (d<=0) {
-                        xp++;
-                        d += Delta_NE;
-                    }
-                    else {
-                        d += Delta_N;
-                    }
-                    plot0();
-                }
-            }
-        }
-        else { //3 u 4
-            Delta_NW = -dy-dx;
-            if (dx >= -dy){ //Octante 3
-
-                Delta_N  = -dx;
-                d = -dy -d2x;
-
-                while (yp <= y1){ //Avanza en y
-                    yp++;
-                    if (d<=0) {
-                        d += Delta_N;
-                    }
-                    else {
-                        xp--;
-                        d += Delta_NW;
-                    }
-                    plot0();
-                }
-            }
-            else{ //Octante 4
-                Delta_W  = -dy;
-                d = -d2y-dx ;
-
-                while (xp >= x1){ //Retrocede en x
-                    xp--;
-                    if (d<=0) {
-                        yp++;
-                        d += Delta_NW;
-                    }
-                    else {
-                        d += Delta_W;
-                    }
-                    plot0();
-                }
-            }
-        }
-    }
-    else { //5,6,7 u 8
-        if (x1 < x0) { //5 o 6
-            Delta_SW = -dy+dx;
-            if (dx <= dy){ //Octante 5
-
-                Delta_W  = -dy   ;
-                d = -d2y+dx ;
-
-                while (xp >= x1){ //Retrocede en x
-                    xp--;
-                    if (d<=0) {
-                        d += Delta_W;
-                    }
-                    else {
-                        yp--;
-                        d += Delta_SW;
-                    }
-                    plot0();
-
-                }
-            }
-            else{ //Octante 6
-
-                Delta_S  =  dx;
-                d = -dy +d2x;
-
-                while (yp >= y1){ //Retrocede en y
-                    yp--;
-                    if (d<=0) {
-                        xp--;
-                        d += Delta_SW;
-                    }
-                    else {
-                        d += Delta_S;
-                    }
-                    plot0();
-
-                }
-            }
-        }
-        else { //7 u 8
-            Delta_SE =  dy+dx;
-            if (dx <= -dy){ //Octante 7
-
-                Delta_S  =  dx   ;
-                d =  dy +d2x;
-
-                while (yp >= y1){ //Retrocede en y
-                    yp--;
-                    if (d<=0) {
-                        d += Delta_S;
-                    }
-                    else {
-                        xp++;
-                        d += Delta_SE;
-                    }
-                    plot0();
-
-                }
-            }
-            else{ //Octante 8
-
-                Delta_E  =  dy;
-                d =  d2y+dx;
-
-                while (xp <= x1){ //Avanza en x
-                    xp++;
-                    if (d<=0) {
-                        yp--;
-                        d += Delta_SE;
-                    }
-                    else {
-                        d += Delta_E;
-                    }
-                    plot0();
-
-                }
-            }
-        }
-    }
-}
-
-int runPlotlessAlgorithms(){
+int timeAlgorithms( void (*f)(int,int) , char wplot[] ){
     clock_t start[4], end[4];
     int arregloCorX0[lineasGl], arregloCorY0[lineasGl], arregloCorX1[lineasGl], arregloCorY1[lineasGl];
     int i,veces;
@@ -714,59 +384,12 @@ int runPlotlessAlgorithms(){
         arregloCorY1[i] = genRandLimNumber(res);
     }
 
-    //Algoritmo 1
-    start[0]=clock();
-    for (i=0; i<lineasGl; i++){
-        for (veces=0; veces<vecesGl; veces++){
-            line1noPlot(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
-        }
-    }
-    end[0]=clock();
-
-    //Algoritmo 2
-    start[1]=clock();
-    for (i=0; i<lineasGl; i++){
-        for (veces=0; veces<vecesGl; veces++){
-            line2noPlot(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
-        }
-    }
-    end[1]=clock();
-
-    //Algoritmo 3
-    start[2]=clock();
-    for (i=0; i<lineasGl; i++){
-        for (veces=0; veces<vecesGl; veces++){
-            line3noPlot(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
-        }
-    }
-    end[2]=clock();
-
-    //Algoritmo 4
-    start[3]=clock();
-    for (i=0; i<lineasGl; i++){
-        for (veces=0; veces<vecesGl; veces++){
-            line4noPlot(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
-        }
-    }
-    end[3]=clock();
-
-    printf("Duraciones sin plot.\n \t\tAlgoritmo \tDuración\n");
-    for (i=0;i<=3;i++){
-        printf("\t\t %i. \t\t %lf segundos \n",(i+1),((double) end[i]-start[i])/CLOCKS_PER_SEC);
-    }
-}
-
-int runPlotAlgorithms(){
-    clock_t start[4], end[4];
-    int arregloCorX0[lineasGl], arregloCorY0[lineasGl], arregloCorX1[lineasGl], arregloCorY1[lineasGl];
-    int i,veces;
-
     glColor3f (0,1,0);
     //Algoritmo 1
     start[0]=clock();
     for (i=0; i<lineasGl; i++){
         for (veces=0; veces<vecesGl; veces++){
-            line1(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
+            line1(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i],(*f));
         }
     }
     end[0]=clock();
@@ -776,7 +399,7 @@ int runPlotAlgorithms(){
     start[1]=clock();
     for (i=0; i<lineasGl; i++){
         for (veces=0; veces<vecesGl; veces++){
-            line2(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
+            line2(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i], (*f));
         }
     }
     end[1]=clock();
@@ -786,7 +409,7 @@ int runPlotAlgorithms(){
     start[2]=clock();
     for (i=0; i<lineasGl; i++){
         for (veces=0; veces<vecesGl; veces++){
-            line3(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
+            line3(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i], (*f));
         }
     }
     end[2]=clock();
@@ -796,12 +419,12 @@ int runPlotAlgorithms(){
     start[3]=clock();
     for (i=0; i<lineasGl; i++){
         for (veces=0; veces<vecesGl; veces++){
-            line4(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i]);
+            line4(arregloCorX0[i],arregloCorY0[i], arregloCorX1[i], arregloCorY1[i], (*f));
         }
     }
     end[3]=clock();
 
-    printf("Duraciones con plot.\n \t\tAlgoritmo \tDuración\n");
+    printf("Duraciones %s plot.\n \t\tAlgoritmo \tDuración\n", wplot);
     for (i=0;i<=3;i++){
         printf("\t\t %i. \t\t %lf segundos \n",(i+1),((double) end[i]-start[i])/CLOCKS_PER_SEC);
     }    
@@ -809,15 +432,6 @@ int runPlotAlgorithms(){
 
 int main(int argc, char *argv[]) {
 
-	buffer = (COLOR **)malloc(H_SIZE * sizeof(COLOR*));
-	
-  	glutInit(&argc, argv);
-  	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-  	glutInitWindowSize(H_SIZE,V_SIZE);
-  	glutCreateWindow("CG Proyecto 0");
-  	glClear(GL_COLOR_BUFFER_BIT);
-  	gluOrtho2D(-0.5, H_SIZE +0.5, -0.5, V_SIZE + 0.5);
-  	
     if( argc != 4 ) {
       printf("Se espera 3 parametros. \n Introduzca los parametros de forma <programa> <resolucion> <# lineas> <# veces>");
       return 0;
@@ -836,13 +450,23 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
+    buffer = (COLOR **)malloc(H_SIZE * sizeof(COLOR*));
+    
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(res,res);
+    glutCreateWindow("CG Proyecto 0");
+    glClear(GL_COLOR_BUFFER_BIT);
+    gluOrtho2D(-0.5, res +0.5, -0.5, res + 0.5);
+    
+
     printf("Tecnológico de Costa Rica\n IC8019 - Gráficos Por Computadora, PROYECTO 0: Algoritmos de líneas\n");
     printf("\n\n Profesor: Dr. Francisco Torres Rojas\n");
     printf(" Estudiantes:\n\tCarlos Girón Alas\n\tJulián J. Méndez Oconitrillo\n\tDaniel Troyo Garro\n");
     printf("17 agosto 2016\n\n");
 
-    runPlotlessAlgorithms();
-    runPlotAlgorithms();
+    timeAlgorithms(plot0, "sin");
+    timeAlgorithms(plot, "con");
     glutMainLoop();
 
     return 0;
