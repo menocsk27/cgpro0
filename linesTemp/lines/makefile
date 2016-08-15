@@ -27,7 +27,7 @@ LIB_DEBUG = $(LIB) -lSDL2 -lSDL_bgi
 LDFLAGS_DEBUG = $(LDFLAGS)
 OBJDIR_DEBUG = obj/Debug
 DEP_DEBUG = 
-OUT_DEBUG = bin/Debug/lines
+OUT_DEBUG = lines
 
 INC_RELEASE = $(INC)
 CFLAGS_RELEASE = $(CFLAGS) -O2
@@ -38,11 +38,11 @@ LIB_RELEASE = $(LIB)
 LDFLAGS_RELEASE = $(LDFLAGS) -s
 OBJDIR_RELEASE = obj/Release
 DEP_RELEASE = 
-OUT_RELEASE = bin/Release/lines
+OUT_RELEASE = lines
 
-OBJ_DEBUG = $(OBJDIR_DEBUG)/main.o
+OBJ_DEBUG = main.o
 
-OBJ_RELEASE = $(OBJDIR_RELEASE)/main.o
+OBJ_RELEASE = main.o
 
 all: debug release
 

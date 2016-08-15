@@ -671,13 +671,17 @@ void line4noPlot (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
 void startScreen(){
     int gdriver = DETECT, gmode;
     initgraph(&gdriver, &gmode, NULL);
-
+    
 
 
     initwindow (res,res);
+    //closegraph();
     setbkcolor(0);
 
+
 }
+
+
 
 void plot0(){}
 void plot (int x, int y){
