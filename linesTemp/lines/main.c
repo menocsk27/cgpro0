@@ -4,10 +4,10 @@
 #include <graphics.h>
 #include <time.h>
 
-#define HSIZE 400
-#define VSIZE 400
 
 static int color = 2;
+static int res;
+
 //Algoritmos normales
 void line1 (int x0, int y0, int x1, int y1){
     int i, temp;
@@ -671,9 +671,12 @@ void line4noPlot (int x0, int y0, int x1, int y1){ //Bresenham (punto medio)
 void startScreen(){
     int gdriver = DETECT, gmode;
     initgraph(&gdriver, &gmode, NULL);
-    closegraph();
 
-    initwindow (HSIZE,VSIZE);
+
+
+    initwindow (res,res);
+    setbkcolor(0);
+
 }
 
 void plot0(){}
@@ -699,10 +702,10 @@ int runPlotlessAlgorithms(int numCor, int numVeces){
     int i,veces;
 
     for (i=0; i<numCor; i++){
-        arregloCorX0[i] = genRandLimNumber(HSIZE);
-        arregloCorY0[i] = genRandLimNumber(VSIZE);
-        arregloCorX1[i] = genRandLimNumber(HSIZE);
-        arregloCorY1[i] = genRandLimNumber(VSIZE);
+        arregloCorX0[i] = genRandLimNumber(res);
+        arregloCorY0[i] = genRandLimNumber(res);
+        arregloCorX1[i] = genRandLimNumber(res);
+        arregloCorY1[i] = genRandLimNumber(res);
     }
 
     //Algoritmo 1
@@ -795,17 +798,37 @@ int runPlotAlgorithms(int numCor, int numVeces){
     }
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+
+    int lineas;
+    int veces;
+
+    if( argc != 4 ) {
+      printf("Se espera 3 parametros. \n Introduzca los parametros de forma <programa> <resolucion> <# lineas> <# veces>");
+      return 0;
+    }
+
+    if (sscanf (argv[1], "%i", &res)!=1) {
+        printf ("error - <resolucion> no es un entero");
+        return 0;
+    }
+    if (sscanf (argv[2], "%i", &lineas)!=1) {
+        printf ("error - <# lineas> no es un entero");
+        return 0;
+    }
+    if (sscanf (argv[3], "%i", &veces)!=1) {
+        printf ("error - <# veces> no es un enteror");
+        return 0;
+    }
 
     printf("Tecnológico de Costa Rica\n IC8019 - Gráficos Por Computadora, PROYECTO 0: Algoritmos de líneas\n");
     printf("\n\n Profesor: Dr. Francisco Torres Rojas\n");
     printf(" Estudiantes:\n\tCarlos Girón Alas\n\tJulián J. Méndez Oconitrillo\n\tDaniel Troyo Garro\n");
     printf("17 agosto 2016\n\n");
 
-    int lineas = 3;
-    int veces = 3;
     runPlotlessAlgorithms(lineas, veces);
     runPlotAlgorithms(lineas, veces);
+
 
     return 0;
 }
