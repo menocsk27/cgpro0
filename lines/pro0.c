@@ -464,7 +464,7 @@ int main(int argc, char *argv[]) {
     printf("\n\n Profesor: Dr. Francisco Torres Rojas\n");
     printf(" Estudiantes:\n\tCarlos Girón Alas\n\tJulián J. Méndez Oconitrillo\n\tDaniel Troyo Garro\n");
     printf("17 agosto 2016\n\n");
-
+     
     timeAlgorithms(lineas, veces, plot0, "sin");
     timeAlgorithms(lineas, veces, plot, "con");
     glutMainLoop();
