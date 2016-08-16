@@ -224,7 +224,7 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
 
                 while (xp < x1){ //Avanza en x
                     xp++;
-                    if (d<0) {
+                    if (d<=0) {
                         d += Delta_E;
                     }
                     else {
@@ -261,7 +261,7 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
 
                 while (yp < y1){ //Avanza en y
                     yp++;
-                    if (d<0) {
+                    if (d<=0) {
                         d += Delta_N;
                     }
                     else {
@@ -299,7 +299,7 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
 
                 while (xp > x1){ //Retrocede en x
                     xp--;
-                    if (d<0) {
+                    if (d<=0) {
                         d += Delta_W;
                     }
                     else {
@@ -338,7 +338,7 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
 
                 while (yp > y1){ //Retrocede en y
                     yp--;
-                    if (d<0) {
+                    if (d<=0) {
                         d += Delta_S;
                     }
                     else {
@@ -384,7 +384,7 @@ int timeAlgorithms(int numLineas, int numVeces, void (*f)(int,int) , char wplot[
     }
     
     //Algoritmo 1
-    glColor3f (0,1,1);
+    glColor3f (0,1,0);
     start[0]=clock();
     for (i=0; i<numLineas; i++){
         for (veces=0; veces<numVeces; veces++){
