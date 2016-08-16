@@ -261,7 +261,7 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
 
                 while (yp < y1){ //Avanza en y
                     yp++;
-                    if (d<0) {
+                    if (d<=0) {
                         d += Delta_N;
                     }
                     else {
@@ -299,7 +299,7 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
 
                 while (xp > x1){ //Retrocede en x
                     xp--;
-                    if (d<0) {
+                    if (d<=0) {
                         d += Delta_W;
                     }
                     else {
@@ -317,7 +317,7 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
 
                 while (yp > y1){ //Retrocede en y
                     yp--;
-                    if (d<=0) {
+                    if (d<0) {
                         xp--;
                         d += Delta_SW;
                     }
@@ -356,7 +356,7 @@ void line4 (int x0, int y0, int x1, int y1, void (*plot)(int,int)){ //Bresenham 
 
                 while (xp < x1){ //Avanza en x
                     xp++;
-                    if (d<=0) {
+                    if (d<0) {
                         yp--;
                         d += Delta_SE;
                     }
@@ -382,7 +382,7 @@ int timeAlgorithms(int numLineas, int numVeces, void (*f)(int,int) , char wplot[
         arregloCorX1[i] = genRandLimNumber(res);
         arregloCorY1[i] = genRandLimNumber(res);
     }
-    
+
     //Algoritmo 1
     glColor3f (0,1,0);
     start[0]=clock();
@@ -426,7 +426,7 @@ int timeAlgorithms(int numLineas, int numVeces, void (*f)(int,int) , char wplot[
     printf("Duraciones %s plot.\n \t\tAlgoritmo \tDuración\n", wplot);
     for (i=0;i<=3;i++){
         printf("\t\t %i. \t\t %lf segundos \n",(i+1),((double) end[i]-start[i])/CLOCKS_PER_SEC);
-    } 
+    }
 }
 
 int main(int argc, char *argv[]) {
