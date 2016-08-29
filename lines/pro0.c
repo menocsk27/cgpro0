@@ -21,8 +21,6 @@ void plot (int x, int y){
   	glBegin (GL_POINTS);
   	glVertex2i (x,y);
   	glEnd();
-
-  	glFlush();
 }
 
 int max(int a, int b){
@@ -467,6 +465,8 @@ int main(int argc, char *argv[]) {
      
     timeAlgorithms(lineas, veces, plot0, "sin");
     timeAlgorithms(lineas, veces, plot, "con");
+    
+    glFlush();
     glutMainLoop();
 
     return 0;
